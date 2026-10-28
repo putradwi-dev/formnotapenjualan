@@ -188,9 +188,15 @@
                 </div>
             </div>
 
-            <!-- Tanda Tangan / Hormat Kami (Kanan) -->
-            <div class="md:col-span-5 text-center flex flex-col items-center justify-start pt-2">
-                <p class="text-xs font-bold text-gray-700 uppercase tracking-wider mb-14">HORMAT KAMI,</p>
+            <!-- Tanda Tangan / Hormat Kami dengan Gambar TTD & Stempel (Kanan) -->
+            <div class="md:col-span-5 text-center flex flex-col items-center justify-start pt-2 relative">
+                <p class="text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">HORMAT KAMI,</p>
+                
+                <!-- Container Gambar Stempel dan Tanda Tangan -->
+                <div class="my-1 relative flex justify-center items-center">
+                    <img src="ttd mt.png" alt="Tanda Tangan & Stempel" class="w-40 h-auto object-contain">
+                </div>
+
                 <div class="w-48 border-b border-gray-300 mb-1"></div>
                 <p class="text-xs font-bold text-gray-900 tracking-wider">MARVELL TANGERANG</p>
             </div>
@@ -211,7 +217,7 @@
             return parseFloat(str.replace(/[^0-9]/g, '')) || 0;
         }
 
-        // Format tanggal ke Indonesia (DD MMMM YYYY / DD-MM-YYYY)
+        // Format tanggal ke Indonesia (DD MMMM YYYY)
         function formatTanggalIndo(dateStr) {
             if (!dateStr) return '';
             const months = [
