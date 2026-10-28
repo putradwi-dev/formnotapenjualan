@@ -99,10 +99,10 @@
         <!-- Section Info: Nota & Penerima -->
         <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-6">
             <!-- NOTA PENJUALAN (Kiri) -->
-            <div class="md:col-span-5 bg-slate-50 p-4 rounded-lg border border-slate-100">
-                <h2 class="font-bold text-gray-800 text-lg mb-3 tracking-wide whitespace-nowrap">NOTA PENJUALAN</h2>
+            <div class="md:col-span-5 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                <h2 class="font-bold text-gray-800 text-lg mb-2 tracking-wide whitespace-nowrap">NOTA PENJUALAN</h2>
                 <div class="flex items-center text-sm gap-2">
-                    <span class="text-gray-600 w-20 flex-shrink-0">Tanggal :</span>
+                    <span class="text-gray-600 w-15 flex-shrink-0">Tanggal :</span>
                     <!-- Mode Edit Input Date -->
                     <input type="date" id="inputTanggal" class="bg-white border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 font-medium">
                     <!-- Mode PDF/Print Format Tanggal Indonesia -->
@@ -115,11 +115,11 @@
                 <h3 class="text-xs font-bold text-gray-500 tracking-wider mb-2">KEPADA YTH.</h3>
                 <div class="space-y-2 text-sm">
                     <div class="flex items-center gap-2">
-                        <span class="text-gray-600 w-16 flex-shrink-0">Nama :</span>
+                        <span class="text-gray-600 w-14 flex-shrink-0">Nama :</span>
                         <input type="text" id="inputNama" placeholder="Nama Pembeli / Customer" class="bg-white border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5">
                     </div>
                     <div class="flex items-start gap-2">
-                        <span class="text-gray-600 w-16 flex-shrink-0 pt-0.5">Alamat :</span>
+                        <span class="text-gray-600 w-14 flex-shrink-0 pt-1">Alamat :</span>
                         <textarea id="inputAlamat" rows="2" placeholder="Alamat Lengkap" class="bg-white border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 leading-tight resize-none"></textarea>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
         <!-- Tabel Barang -->
         <div class="overflow-x-auto mb-4">
             <table class="w-full text-sm text-left text-gray-600 border-collapse">
-                <thead class="text-xs text-white uppercase bg-slate-800">
+                <thead class="text-s text-white uppercase bg-slate-800">
                     <tr>
                         <th scope="col" class="py-3 px-3 text-center w-12 rounded-tl-lg">NO</th>
                         <th scope="col" class="py-3 px-3">NAMA BARANG</th>
@@ -321,14 +321,14 @@
 
             if (selected === 'pt') {
                 detailContainer.innerHTML = `
-                    <p class="font-bold text-gray-800">Transfer Bank ke Rekening PT. MBP:</p>
+                    <p class="font-bold text-gray-800">Transfer Bank ke Rekening PT. MBP</p>
                     <p>Bank: <strong>BCA</strong></p>
                     <p>No. Rekening: <strong>8015990089 </strong></p>
                     <p>Atas Nama: <strong>PT. MAKMUR BERUNTUNG PISAN</strong></p>
                 `;
             } else if (selected === 'pribadi') {
                 detailContainer.innerHTML = `
-                    <p class="font-bold text-gray-800">Transfer Bank ke Rekening Pribadi:</p>
+                    <p class="font-bold text-gray-800">Transfer Bank ke Rekening Pribadi</p>
                     <p>Bank: <strong>BCA</strong></p>
                     <p>No. Rekening: <strong>4811239997</strong></p>
                     <p>Atas Nama: <strong>SUSANNA</strong></p>
@@ -385,7 +385,7 @@
         function exportToPDF() {
             const element = document.getElementById('nota-paper');
             const namaPembeli = document.getElementById('inputNama').value.trim() || 'Pembeli';
-            const fileName = `Nota Penjualan Atas Nama ${namaPembeli}.pdf`;
+            const fileName = `Nota Penjualan atas nama ${namaPembeli}.pdf`;
 
             // Terapkan format tanggal Indonesia
             applyExportFormat();
