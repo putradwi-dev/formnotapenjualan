@@ -72,31 +72,36 @@
             <p class="text-xs text-gray-500">MARVELL TANGERANG</p>
         </div>
         <div class="flex flex-wrap items-center gap-2 md:gap-3">
-            <button onclick="resetForm()" class="px-3 py-2 text-xs md:text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex items-center gap-1.5">
+            <button onclick="openHistoryModal()" class="px-3.5 py-2 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors flex items-center gap-2 border border-blue-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Riwayat Nota (<span id="historyCount">0</span>)
+            </button>
+            <button onclick="saveCurrentInvoiceToHistory(true)" class="px-3.5 py-2 text-sm font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition-colors flex items-center gap-2 border border-emerald-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                Simpan Ke Histori
+            </button>
+            <button onclick="resetForm()" class="px-3.5 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                 Set Ulang
             </button>
-            
-            <!-- Tombol Simpan JSON & Buka JSON -->
-            <button onclick="saveJSONData()" class="px-3 py-2 text-xs md:text-sm font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-lg transition-colors flex items-center gap-1.5">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-                Simpan JSON
-            </button>
-            <label class="px-3 py-2 text-xs md:text-sm font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                Buka JSON
-                <input type="file" id="jsonFileInput" accept=".json" onchange="loadJSONData(event)" class="hidden">
-            </label>
-
-            <button onclick="triggerPrint()" class="px-3 py-2 text-xs md:text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex items-center gap-1.5">
+            <button onclick="triggerPrint()" class="px-3.5 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                 Cetak
             </button>
-            <button onclick="exportToPDF()" class="px-3 py-2 text-xs md:text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
+            <button onclick="exportToPDF()" class="px-3.5 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                 Simpan PDF
             </button>
         </div>
+    </div>
+
+    <!-- Status Bar Mode Edit (Disembunyikan secara bawaan) -->
+    <div id="editingBanner" class="max-w-4xl mx-auto mb-4 p-3 bg-amber-50 border border-amber-300 rounded-xl flex justify-between items-center no-print hidden">
+        <div class="flex items-center gap-2 text-xs font-semibold text-amber-800">
+            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            <span>Sedang Mengedit Nota: <strong id="editingNotaTitle" class="underline"></strong></span>
+        </div>
+        <button onclick="cancelEditingMode()" class="text-xs text-amber-700 font-bold hover:text-amber-900 bg-amber-200/60 px-2 py-1 rounded">Batal Edit</button>
     </div>
 
     <!-- Lembar Nota -->
@@ -216,7 +221,65 @@
 
     </div>
 
+    <!-- Modal Riwayat Nota (Histori LocalStorage) -->
+    <div id="historyModal" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden no-print">
+        <div class="bg-white rounded-2xl shadow-xl max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden border border-gray-100">
+            <!-- Modal Header -->
+            <div class="px-6 py-4 bg-slate-800 text-white flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3 class="font-bold text-base">Riwayat & Kelola Data Nota</h3>
+                </div>
+                <button onclick="closeHistoryModal()" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <!-- Modal Search & Controls -->
+            <div class="p-4 bg-slate-50 border-b border-gray-200 flex flex-wrap gap-3 justify-between items-center">
+                <div class="relative flex-1 min-w-[200px]">
+                    <input type="text" id="searchHistoryInput" oninput="renderHistoryTable()" placeholder="Cari berdasarkan nama pembeli..." class="w-full pl-9 pr-3 py-2 text-sm bg-white border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <button onclick="clearAllHistory()" class="px-3 py-2 text-xs font-semibold text-red-600 hover:text-red-800 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-200">
+                    Hapus Semua Riwayat
+                </button>
+            </div>
+
+            <!-- Modal Table Body -->
+            <div class="overflow-y-auto p-4 flex-1">
+                <table class="w-full text-xs text-left border-collapse">
+                    <thead class="bg-gray-100 text-gray-700 uppercase">
+                        <tr>
+                            <th class="p-2.5 rounded-l-lg">Tanggal</th>
+                            <th class="p-2.5">Nama Pembeli</th>
+                            <th class="p-2.5 text-right">Total Transaksi</th>
+                            <th class="p-2.5 text-center rounded-r-lg w-32">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody" class="divide-y divide-gray-200">
+                        <!-- Diisi via JavaScript -->
+                    </tbody>
+                </table>
+                <div id="emptyHistoryMsg" class="text-center text-gray-400 py-10 hidden">
+                    Belum ada riwayat nota tersimpan.
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-slate-50 border-t border-gray-200 text-right">
+                <button onclick="closeHistoryModal()" class="px-4 py-2 text-xs font-semibold bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Key LocalStorage
+        const STORAGE_KEY = 'MARVELL_NOTA_HISTORY';
+        let currentEditingId = null;
+
         // Set tanggal default ke hari ini
         document.getElementById('inputTanggal').valueAsDate = new Date();
 
@@ -226,7 +289,7 @@
 
         function parseRawNumber(str) {
             if (!str) return 0;
-            return parseFloat(String(str).replace(/[^0-9]/g, '')) || 0;
+            return parseFloat(str.replace(/[^0-9]/g, '')) || 0;
         }
 
         // Format tanggal ke Indonesia (DD MMMM YYYY)
@@ -247,23 +310,23 @@
         }
 
         // Template baris barang
-        function createRowHTML(index) {
+        function createRowHTML(index, name = '', price = '', qty = 1) {
             return `
                 <tr class="item-row">
                     <td class="py-2 px-3 text-center font-medium text-gray-500 row-number">${index}</td>
                     <td class="py-2 px-3">
-                        <input type="text" placeholder="Nama / Deskripsi Barang" class="item-name bg-white border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5">
+                        <input type="text" value="${name}" placeholder="Nama / Deskripsi Barang" class="item-name bg-white border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5">
                     </td>
                     <td class="py-2 px-3">
-                        <input type="text" placeholder="Rp 0" onfocus="handlePriceFocus(this)" onblur="handlePriceBlur(this)" oninput="calculateRow(this)" class="item-price bg-white border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 text-right font-mono">
+                        <input type="text" value="${price ? formatRupiah(price) : ''}" placeholder="Rp 0" onfocus="handlePriceFocus(this)" onblur="handlePriceBlur(this)" oninput="calculateRow(this)" class="item-price bg-white border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 text-right font-mono">
                     </td>
                     <td class="py-2 px-3">
                         <select onchange="calculateRow(this)" class="item-qty bg-white border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 text-center font-mono">
-                            ${Array.from({length: 500}, (_, i) => `<option value="${i+1}">${i+1}</option>`).join('')}
+                            ${Array.from({length: 500}, (_, i) => `<option value="${i+1}" ${qty == (i+1) ? 'selected' : ''}>${i+1}</option>`).join('')}
                         </select>
                     </td>
                     <td class="py-2 px-3 text-right font-mono font-semibold text-gray-800 item-subtotal">
-                        Rp 0
+                        ${formatRupiah((price || 0) * (qty || 1))}
                     </td>
                     <td class="py-2 px-3 text-center no-print">
                         <button onclick="removeRow(this)" class="text-red-500 hover:text-red-700 p-1 rounded transition-colors" title="Hapus Baris">
@@ -330,6 +393,7 @@
                 total += (price * qty);
             });
             document.getElementById('grandTotal').textContent = formatRupiah(total);
+            return total;
         }
 
         // Update Tampilan Metode Pembayaran
@@ -361,6 +425,8 @@
 
         function resetForm() {
             if (confirm('Apakah Anda yakin ingin mengosongkan form ini?')) {
+                currentEditingId = null;
+                document.getElementById('editingBanner').classList.add('hidden');
                 document.getElementById('inputNama').value = '';
                 document.getElementById('inputAlamat').value = '';
                 document.getElementById('inputTanggal').valueAsDate = new Date();
@@ -374,80 +440,6 @@
                 updatePaymentView();
                 calculateGrandTotal();
             }
-        }
-
-        /* --- FUNGSI SIMPAN & BUKA SIMPANAN DATA JSON --- */
-        function saveJSONData() {
-            const items = [];
-            document.querySelectorAll('.item-row').forEach(row => {
-                const name = row.querySelector('.item-name').value.trim();
-                const price = parseRawNumber(row.querySelector('.item-price').value);
-                const qty = parseInt(row.querySelector('.item-qty').value) || 1;
-                if (name || price > 0) {
-                    items.push({ name, price, qty });
-                }
-            });
-
-            const data = {
-                tanggal: document.getElementById('inputTanggal').value,
-                nama: document.getElementById('inputNama').value,
-                alamat: document.getElementById('inputAlamat').value,
-                paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
-                items: items
-            };
-
-            const namaPembeli = data.nama.trim() || 'Pembeli';
-            const jsonString = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", jsonString);
-            downloadAnchor.setAttribute("download", `Data Nota Atas Nama ${namaPembeli}.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
-
-        function loadJSONData(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    
-                    if (data.tanggal) document.getElementById('inputTanggal').value = data.tanggal;
-                    if (data.nama !== undefined) document.getElementById('inputNama').value = data.nama;
-                    if (data.alamat !== undefined) document.getElementById('inputAlamat').value = data.alamat;
-                    
-                    if (data.paymentMethod) {
-                        const radio = document.querySelector(`input[name="paymentMethod"][value="${data.paymentMethod}"]`);
-                        if (radio) {
-                            radio.checked = true;
-                            updatePaymentView();
-                        }
-                    }
-
-                    if (Array.isArray(data.items) && data.items.length > 0) {
-                        tbody.innerHTML = '';
-                        data.items.forEach((item, index) => {
-                            tbody.insertAdjacentHTML('beforeend', createRowHTML(index + 1));
-                            const currentRow = tbody.lastElementChild;
-                            currentRow.querySelector('.item-name').value = item.name || '';
-                            const priceInput = currentRow.querySelector('.item-price');
-                            priceInput.value = item.price ? formatRupiah(item.price) : '';
-                            currentRow.querySelector('.item-qty').value = item.qty || 1;
-                            calculateRow(priceInput);
-                        });
-                    }
-
-                    calculateGrandTotal();
-                    alert('Data nota berhasil dimuat!');
-                } catch (err) {
-                    alert('Gagal membaca file JSON. Pastikan format file benar.');
-                }
-            };
-            reader.readAsText(file);
-            event.target.value = ''; // Reset input file
         }
 
         function applyExportFormat() {
@@ -468,13 +460,195 @@
         }
 
         function triggerPrint() {
+            saveCurrentInvoiceToHistory(false);
             applyExportFormat();
             window.print();
             setTimeout(removeExportFormat, 500);
         }
 
+        // ================= FITUR LOCALSTORAGE / KELOLA DATA =================
+
+        function getHistoryData() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveHistoryData(historyArray) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(historyArray));
+            updateHistoryBadge();
+        }
+
+        function updateHistoryBadge() {
+            const history = getHistoryData();
+            document.getElementById('historyCount').textContent = history.length;
+        }
+
+        function getCurrentInvoiceObject() {
+            const items = [];
+            document.querySelectorAll('.item-row').forEach(row => {
+                const name = row.querySelector('.item-name').value.trim();
+                const price = parseRawNumber(row.querySelector('.item-price').value);
+                const qty = parseInt(row.querySelector('.item-qty').value) || 1;
+                if (name || price > 0) {
+                    items.push({ name, price, qty });
+                }
+            });
+
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            return {
+                id: currentEditingId || 'NOTA_' + Date.now(),
+                date: document.getElementById('inputTanggal').value,
+                customerName: document.getElementById('inputNama').value.trim(),
+                customerAddress: document.getElementById('inputAlamat').value.trim(),
+                items: items,
+                grandTotal: calculateGrandTotal(),
+                paymentMethod: paymentMethod,
+                updatedAt: new Date().toISOString()
+            };
+        }
+
+        function saveCurrentInvoiceToHistory(showAlert = false) {
+            const currentInvoice = getCurrentInvoiceObject();
+            
+            if (!currentInvoice.customerName && currentInvoice.items.length === 0) {
+                if (showAlert) alert('Form nota masih kosong!');
+                return;
+            }
+
+            let history = getHistoryData();
+            const existingIndex = history.findIndex(item => item.id === currentInvoice.id);
+
+            if (existingIndex >= 0) {
+                history[existingIndex] = currentInvoice;
+            } else {
+                history.unshift(currentInvoice);
+            }
+
+            saveHistoryData(history);
+            if (showAlert) alert('Nota berhasil disimpan ke histori!');
+        }
+
+        function openHistoryModal() {
+            renderHistoryTable();
+            document.getElementById('historyModal').classList.remove('hidden');
+        }
+
+        closeHistoryModal = function() {
+            document.getElementById('historyModal').classList.add('hidden');
+        };
+
+        function renderHistoryTable() {
+            const history = getHistoryData();
+            const searchQuery = document.getElementById('searchHistoryInput').value.toLowerCase();
+            const tbodyHist = document.getElementById('historyTableBody');
+            const emptyMsg = document.getElementById('emptyHistoryMsg');
+
+            tbodyHist.innerHTML = '';
+
+            const filteredHistory = history.filter(item => 
+                (item.customerName || 'Tanpa Nama').toLowerCase().includes(searchQuery)
+            );
+
+            if (filteredHistory.length === 0) {
+                emptyMsg.classList.remove('hidden');
+                return;
+            }
+
+            emptyMsg.classList.add('hidden');
+
+            filteredHistory.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition-colors";
+                tr.innerHTML = `
+                    <td class="p-2.5 font-medium text-gray-600">${formatTanggalIndo(item.date)}</td>
+                    <td class="p-2.5 font-bold text-gray-800">${item.customerName || 'Tanpa Nama'}</td>
+                    <td class="p-2.5 text-right font-mono font-bold text-blue-700">${formatRupiah(item.grandTotal)}</td>
+                    <td class="p-2.5 text-center">
+                        <div class="flex justify-center items-center gap-1.5">
+                            <button onclick="editInvoiceFromHistory('${item.id}')" class="px-2 py-1 text-xs bg-amber-50 hover:bg-amber-100 text-amber-700 font-semibold rounded border border-amber-200" title="Edit Data Nota">
+                                Edit
+                            </button>
+                            <button onclick="deleteInvoiceFromHistory('${item.id}')" class="px-2 py-1 text-xs bg-red-50 hover:bg-red-100 text-red-600 font-semibold rounded border border-red-200" title="Hapus Data">
+                                Hapus
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbodyHist.appendChild(tr);
+            });
+        }
+
+        function editInvoiceFromHistory(id) {
+            const history = getHistoryData();
+            const invoice = history.find(item => item.id === id);
+
+            if (!invoice) return;
+
+            currentEditingId = invoice.id;
+            
+            // Set Banner Edit
+            document.getElementById('editingNotaTitle').textContent = `${invoice.customerName || 'Customer'} (${formatTanggalIndo(invoice.date)})`;
+            document.getElementById('editingBanner').classList.remove('hidden');
+
+            // Set Form Data
+            document.getElementById('inputTanggal').value = invoice.date;
+            document.getElementById('inputNama').value = invoice.customerName || '';
+            document.getElementById('inputAlamat').value = invoice.customerAddress || '';
+
+            // Set Payment
+            const rad = document.querySelector(`input[name="paymentMethod"][value="${invoice.paymentMethod || 'pt'}"]`);
+            if (rad) rad.checked = true;
+            updatePaymentView();
+
+            // Set Items Table
+            tbody.innerHTML = '';
+            if (invoice.items && invoice.items.length > 0) {
+                invoice.items.forEach((item, idx) => {
+                    tbody.insertAdjacentHTML('beforeend', createRowHTML(idx + 1, item.name, item.price, item.qty));
+                });
+            } else {
+                for (let i = 1; i <= 3; i++) {
+                    tbody.insertAdjacentHTML('beforeend', createRowHTML(i));
+                }
+            }
+
+            calculateGrandTotal();
+            closeHistoryModal();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function cancelEditingMode() {
+            currentEditingId = null;
+            document.getElementById('editingBanner').classList.add('hidden');
+            resetForm();
+        }
+
+        function deleteInvoiceFromHistory(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus nota ini dari riwayat?')) {
+                let history = getHistoryData();
+                history = history.filter(item => item.id !== id);
+                saveHistoryData(history);
+                renderHistoryTable();
+            }
+        }
+
+        function clearAllHistory() {
+            if (confirm('PERINGATAN: Apakah Anda yakin ingin menghapus SELURUH riwayat nota? Data yang dihapus tidak bisa dikembalikan.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                updateHistoryBadge();
+                renderHistoryTable();
+            }
+        }
+
+        // Inisialisasi Jumlah Badge Histori
+        updateHistoryBadge();
+
         // Fungsi Ekspor PDF Otomatis
         function exportToPDF() {
+            // Otomatis simpan ke riwayat saat PDF dibuat
+            saveCurrentInvoiceToHistory(false);
+
             const element = document.getElementById('nota-paper');
             const namaPembeli = document.getElementById('inputNama').value.trim() || 'Pembeli';
             const fileName = `Nota Penjualan atas nama ${namaPembeli}.pdf`;
