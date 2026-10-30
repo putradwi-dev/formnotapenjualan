@@ -71,16 +71,28 @@
             <h1 class="font-bold text-gray-800 text-lg">Aplikasi Nota Penjualan</h1>
             <p class="text-xs text-gray-500">MARVELL TANGERANG</p>
         </div>
-        <div class="flex items-center gap-3">
-            <button onclick="resetForm()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2 md:gap-3">
+            <button onclick="resetForm()" class="px-3 py-2 text-xs md:text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex items-center gap-1.5">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                Set Ulang Data
+                Set Ulang
             </button>
-            <button onclick="triggerPrint()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex items-center gap-2">
+            
+            <!-- Tombol Simpan JSON & Buka JSON -->
+            <button onclick="saveJSONData()" class="px-3 py-2 text-xs md:text-sm font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-lg transition-colors flex items-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                Simpan JSON
+            </button>
+            <label class="px-3 py-2 text-xs md:text-sm font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                Buka JSON
+                <input type="file" id="jsonFileInput" accept=".json" onchange="loadJSONData(event)" class="hidden">
+            </label>
+
+            <button onclick="triggerPrint()" class="px-3 py-2 text-xs md:text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex items-center gap-1.5">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                 Cetak
             </button>
-            <button onclick="exportToPDF()" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors flex items-center gap-2">
+            <button onclick="exportToPDF()" class="px-3 py-2 text-xs md:text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                 Simpan PDF
             </button>
@@ -214,7 +226,7 @@
 
         function parseRawNumber(str) {
             if (!str) return 0;
-            return parseFloat(str.replace(/[^0-9]/g, '')) || 0;
+            return parseFloat(String(str).replace(/[^0-9]/g, '')) || 0;
         }
 
         // Format tanggal ke Indonesia (DD MMMM YYYY)
@@ -362,6 +374,80 @@
                 updatePaymentView();
                 calculateGrandTotal();
             }
+        }
+
+        /* --- FUNGSI SIMPAN & BUKA SIMPANAN DATA JSON --- */
+        function saveJSONData() {
+            const items = [];
+            document.querySelectorAll('.item-row').forEach(row => {
+                const name = row.querySelector('.item-name').value.trim();
+                const price = parseRawNumber(row.querySelector('.item-price').value);
+                const qty = parseInt(row.querySelector('.item-qty').value) || 1;
+                if (name || price > 0) {
+                    items.push({ name, price, qty });
+                }
+            });
+
+            const data = {
+                tanggal: document.getElementById('inputTanggal').value,
+                nama: document.getElementById('inputNama').value,
+                alamat: document.getElementById('inputAlamat').value,
+                paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
+                items: items
+            };
+
+            const namaPembeli = data.nama.trim() || 'Pembeli';
+            const jsonString = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", jsonString);
+            downloadAnchor.setAttribute("download", `Data Nota Atas Nama ${namaPembeli}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function loadJSONData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (data.tanggal) document.getElementById('inputTanggal').value = data.tanggal;
+                    if (data.nama !== undefined) document.getElementById('inputNama').value = data.nama;
+                    if (data.alamat !== undefined) document.getElementById('inputAlamat').value = data.alamat;
+                    
+                    if (data.paymentMethod) {
+                        const radio = document.querySelector(`input[name="paymentMethod"][value="${data.paymentMethod}"]`);
+                        if (radio) {
+                            radio.checked = true;
+                            updatePaymentView();
+                        }
+                    }
+
+                    if (Array.isArray(data.items) && data.items.length > 0) {
+                        tbody.innerHTML = '';
+                        data.items.forEach((item, index) => {
+                            tbody.insertAdjacentHTML('beforeend', createRowHTML(index + 1));
+                            const currentRow = tbody.lastElementChild;
+                            currentRow.querySelector('.item-name').value = item.name || '';
+                            const priceInput = currentRow.querySelector('.item-price');
+                            priceInput.value = item.price ? formatRupiah(item.price) : '';
+                            currentRow.querySelector('.item-qty').value = item.qty || 1;
+                            calculateRow(priceInput);
+                        });
+                    }
+
+                    calculateGrandTotal();
+                    alert('Data nota berhasil dimuat!');
+                } catch (err) {
+                    alert('Gagal membaca file JSON. Pastikan format file benar.');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = ''; // Reset input file
         }
 
         function applyExportFormat() {
